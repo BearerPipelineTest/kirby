@@ -1,5 +1,5 @@
 <template>
-  <table class="k-table" :data-clickable="clickable" :data-disabled="disabled">
+  <table class="k-table" :data-disabled="disabled">
     <!-- Header row -->
     <thead>
       <tr>
@@ -175,9 +175,6 @@ export default {
     };
   },
   computed: {
-    clickable() {
-      return "cell" in this.$listeners;
-    },
     dragOptions() {
       return {
         disabled: !this.sortable,
@@ -284,10 +281,6 @@ export default {
 
 .k-table tbody tr:hover td {
   background: rgba(239, 239, 239, 0.25);
-}
-
-.k-table[data-clickable="true"] tr {
-  cursor: pointer;
 }
 
 /* Text aligment */

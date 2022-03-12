@@ -1,5 +1,40 @@
 <template>
+  <!-- layout: table -->
+  <k-table
+    v-if="layout === 'table'"
+    :columns="columns"
+    :index="
+      items.filter((row) => row.image && Object.keys(row.image).length > 0)
+        .length === 0
+        ? false
+        : null
+    "
+    :rows="items"
+    :sortable="sortable"
+    class="k-items"
+    @option="$emit('option', ...$event)"
+  >
+    <template #index="{ row }">
+      <k-item-image
+        v-if="row.image && Object.keys(row.image).length > 0"
+        :image="row.image"
+        layout="list"
+        :width="row.width"
+        class="k-table-index"
+      />
+    </template>
+    <template #options="{ row, rowIndex, options }">
+      <k-status-icon v-if="row.flag" v-bind="row.flag" />
+      <k-options-dropdown
+        :options="row.options || options"
+        @option="onOption($event, row, rowIndex)"
+      />
+    </template>
+  </k-table>
+
+  <!-- other layouts -->
   <k-draggable
+    v-else
     class="k-items"
     :class="'k-' + layout + '-items'"
     :handle="true"
@@ -39,6 +74,7 @@
 export default {
   inheritAttrs: false,
   props: {
+    columns: Object,
     items: {
       type: Array,
       default() {
@@ -173,5 +209,21 @@ export default {
  */
 .k-list-items .k-list-item:not(:last-child) {
   margin-bottom: 2px;
+}
+
+/**
+ * Table
+ */
+.k-table.k-items th.k-table-options-column,
+.k-table.k-items td.k-table-options-column {
+  display: flex;
+  width: calc(2 * var(--table-row-height));
+}
+.k-table.k-items .k-status-icon {
+  height: var(--table-row-height);
+  width: var(--table-row-height);
+}
+.k-table.k-items .k-item-figure + .k-table-sort-handle {
+  background: var(--color-gray-100);
 }
 </style>
