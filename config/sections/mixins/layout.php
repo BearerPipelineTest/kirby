@@ -4,10 +4,10 @@ return [
     'props' => [
         /**
          * Section layout.
-         * Available layout methods: `list`, `cardlets`, `cards`.
+         * Available layout methods: `cards`, `cardlets`, `list`, `table`.
          */
         'layout' => function (string $layout = 'list') {
-            $layouts = ['list', 'cardlets', 'cards'];
+            $layouts = ['cards', 'cardlets', 'list', 'table'];
             return in_array($layout, $layouts) ? $layout : 'list';
         }
     ]

@@ -15,6 +15,7 @@ export default {
       isProcessing: false,
       options: {
         empty: null,
+        columns: [],
         headline: null,
         help: null,
         layout: "list",

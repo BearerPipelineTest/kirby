@@ -30,6 +30,7 @@
     <template v-else>
       <k-collection
         v-if="data.length"
+        :columns="options.columns"
         :layout="options.layout"
         :help="help"
         :items="data"

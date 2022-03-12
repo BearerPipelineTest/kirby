@@ -7,6 +7,7 @@ use Kirby\Toolkit\I18n;
 
 return [
     'mixins' => [
+        'columns',
         'empty',
         'headline',
         'help',
@@ -160,11 +161,15 @@ return [
                 $panel       = $item->panel();
                 $permissions = $item->permissions();
 
-                $data[] = [
+                $values = A::map(
+                    $this->columns(),
+                    fn ($column) => $item->toSafeString($column['value'] ?? false)
+                );
+
+                $data[] = A::merge($values, [
                     'dragText'    => $panel->dragText(),
                     'id'          => $item->id(),
                     'image'       => $panel->image($this->image, $this->layout),
-                    'info'        => $item->toSafeString($this->info ?? false),
                     'link'        => $panel->url(true),
                     'parent'      => $item->parentId(),
                     'permissions' => [
@@ -175,8 +180,7 @@ return [
                     ],
                     'status'      => $item->status(),
                     'template'    => $item->intendedTemplate()->name(),
-                    'text'        => $item->toSafeString($this->text),
-                ];
+                ]);
             }
 
             return $data;
@@ -291,6 +295,7 @@ return [
             'errors'  => $this->errors,
             'options' => [
                 'add'      => $this->add,
+                'columns'  => $this->columns(),
                 'empty'    => $this->empty,
                 'headline' => $this->headline,
                 'help'     => $this->help,

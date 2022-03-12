@@ -1,6 +1,41 @@
 <template>
   <div class="k-collection">
+    <k-table
+      v-if="layout === 'table'"
+      :columns="columns"
+      :index="
+        items.filter((row) => row.image && Object.keys(row.image).length > 0)
+          .length === 0
+          ? false
+          : null
+      "
+      :rows="items"
+      :sortable="sortable"
+      class="k-model-table"
+      @cell="$go($event.row.link)"
+      @option="onOption"
+    >
+      <template #index="{ row }">
+        <k-item-image
+          v-if="row.image && Object.keys(row.image).length > 0"
+          :image="row.image"
+          layout="list"
+          :width="row.width"
+          class="k-table-index"
+          @click.native="$go(row.link)"
+        />
+      </template>
+      <template #options="{ row, rowIndex, options }">
+        <k-status-icon v-if="row.flag" v-bind="row.flag" />
+        <k-options-dropdown
+          :options="row.options || options"
+          @option="onOption($event, row, rowIndex)"
+        />
+      </template>
+    </k-table>
+
     <k-items
+      v-else
       :items="items"
       :layout="layout"
       :size="size"
@@ -42,6 +77,7 @@
  */
 export default {
   props: {
+    columns: Object,
     /**
      * Help text to show below the collection
      */
@@ -143,5 +179,18 @@ export default {
 .k-collection-pagination .k-pagination .k-button {
   padding: 0.5rem 0.75rem;
   line-height: 1.125rem;
+}
+
+.k-table.k-model-table th.k-table-options-column,
+.k-table.k-model-table td.k-table-options-column {
+  display: flex;
+  width: calc(2 * var(--table-row-height));
+}
+.k-table .k-status-icon {
+  height: var(--table-row-height);
+  width: var(--table-row-height);
+}
+.k-model-table .k-item-figure + .k-table-sort-handle {
+  background: var(--color-gray-100);
 }
 </style>
