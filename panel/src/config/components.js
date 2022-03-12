@@ -217,6 +217,8 @@ import ItemImage from "@/components/Layout/ItemImage.vue";
 import Items from "@/components/Layout/Items.vue";
 import Overlay from "@/components/Layout/Overlay.vue";
 import Panel from "@/components/Layout/Panel.vue";
+import Table from "@/components/Layout/Table.vue";
+import TableCell from "@/components/Layout/TableCell.vue";
 import Tabs from "@/components/Layout/Tabs.vue";
 import View from "@/components/Layout/View.vue";
 
@@ -236,6 +238,8 @@ Vue.component("k-item-image", ItemImage);
 Vue.component("k-items", Items);
 Vue.component("k-overlay", Overlay);
 Vue.component("k-panel", Panel);
+Vue.component("k-table", Table);
+Vue.component("k-table-cell", TableCell);
 Vue.component("k-tabs", Tabs);
 Vue.component("k-view", View);
 
