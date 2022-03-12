@@ -101,6 +101,9 @@ import UrlField from "@/components/Forms/Field/UrlField.vue";
 import UsersField from "@/components/Forms/Field/UsersField.vue";
 import WriterField from "@/components/Forms/Field/WriterField.vue";
 
+/* Form Structure */
+import StructureForm from "@/components/Forms/Structure/StructureForm.vue";
+
 /* Form Toolbar */
 import Toolbar from "@/components/Forms/Toolbar.vue";
 import ToolbarEmailDialog from "@/components/Forms/Toolbar/EmailDialog.vue";
@@ -112,6 +115,7 @@ import EmailFieldPreview from "@/components/Forms/Previews/EmailFieldPreview.vue
 import FilesFieldPreview from "@/components/Forms/Previews/FilesFieldPreview.vue";
 import ListFieldPreview from "@/components/Forms/Previews/ListFieldPreview.vue";
 import PagesFieldPreview from "@/components/Forms/Previews/PagesFieldPreview.vue";
+import TagsFieldPreview from "@/components/Forms/Previews/TagsFieldPreview.vue";
 import TimeFieldPreview from "@/components/Forms/Previews/TimeFieldPreview.vue";
 import ToggleFieldPreview from "@/components/Forms/Previews/ToggleFieldPreview.vue";
 import UrlFieldPreview from "@/components/Forms/Previews/UrlFieldPreview.vue";
@@ -185,6 +189,8 @@ Vue.component("k-url-field", UrlField);
 Vue.component("k-users-field", UsersField);
 Vue.component("k-writer-field", WriterField);
 
+Vue.component("k-structure-form", StructureForm);
+
 Vue.component("k-toolbar", Toolbar);
 Vue.component("k-toolbar-email-dialog", ToolbarEmailDialog);
 Vue.component("k-toolbar-link-dialog", ToolbarLinkDialog);
@@ -195,6 +201,7 @@ Vue.component("k-files-field-preview", FilesFieldPreview);
 Vue.component("k-list-field-preview", ListFieldPreview);
 Vue.component("k-pages-field-preview", PagesFieldPreview);
 Vue.component("k-toggle-field-preview", ToggleFieldPreview);
+Vue.component("k-tags-field-preview", TagsFieldPreview);
 Vue.component("k-time-field-preview", TimeFieldPreview);
 Vue.component("k-url-field-preview", UrlFieldPreview);
 Vue.component("k-users-field-preview", UsersFieldPreview);
