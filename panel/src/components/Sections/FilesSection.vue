@@ -15,50 +15,23 @@
       />
     </header>
 
-    <template v-if="error">
-      <k-box theme="negative">
-        <k-text size="small">
-          <strong>{{ $t("error.section.notLoaded", { name: name }) }}:</strong>
-          {{ error }}
-        </k-text>
-      </k-box>
-    </template>
+    <k-box v-if="error" theme="negative">
+      <k-text size="small">
+        <strong>{{ $t("error.section.notLoaded", { name: name }) }}:</strong>
+        {{ error }}
+      </k-text>
+    </k-box>
 
     <template v-else>
       <k-dropzone :disabled="add === false" @drop="drop">
         <k-collection
-          v-if="data.length"
-          :help="help"
-          :items="data"
-          :layout="options.layout"
-          :pagination="pagination"
-          :sortable="!isProcessing && options.sortable"
-          :size="options.size"
+          v-bind="collection"
           :data-invalid="isInvalid"
-          @sort="sort"
-          @paginate="paginate"
           @action="action"
+          @empty="add ? upload : null"
+          @paginate="paginate"
+          @sort="sort"
         />
-        <template v-else>
-          <k-empty
-            :layout="options.layout"
-            :data-invalid="isInvalid"
-            icon="image"
-            v-on="add ? { click: upload } : {}"
-          >
-            {{ options.empty || $t("files.empty") }}
-          </k-empty>
-          <footer class="k-collection-footer">
-            <!-- eslint-disable vue/no-v-html -->
-            <k-text
-              v-if="help"
-              theme="help"
-              class="k-collection-help"
-              v-html="help"
-            />
-            <!-- eslint-enable vue/no-v-html -->
-          </footer>
-        </template>
       </k-dropzone>
 
       <k-upload ref="upload" @success="uploaded" @error="reload" />
@@ -78,6 +51,12 @@ export default {
       } else {
         return false;
       }
+    },
+    empty() {
+      return {
+        icon: "image",
+        text: this.options.empty || this.$t("files.empty")
+      };
     }
   },
   created() {

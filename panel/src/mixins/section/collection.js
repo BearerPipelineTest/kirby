@@ -31,6 +31,18 @@ export default {
     };
   },
   computed: {
+    collection() {
+      return {
+        columns: this.options.columns,
+        empty: this.empty,
+        layout: this.options.layout,
+        help: this.help,
+        items: this.data,
+        pagination: this.pagination,
+        sortable: !this.isProcessing && this.options.sortable,
+        size: this.options.size
+      };
+    },
     headline() {
       return this.options.headline || " ";
     },

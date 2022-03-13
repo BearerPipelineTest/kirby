@@ -24,14 +24,8 @@
         class="k-table-index"
       />
     </template>
-    <template #options="{ row, rowIndex, options }">
-      <div>
-        <k-status-icon v-if="row.flag" v-bind="row.flag" />
-        <k-options-dropdown
-          :options="row.options || options"
-          @option="onOption($event, row, rowIndex)"
-        />
-      </div>
+    <template #options="{ row: item, rowIndex: itemIndex }">
+      <slot name="options" :v-bind="{ item, itemIndex }" />
     </template>
   </k-table>
 
@@ -48,27 +42,25 @@
     @change="$emit('change', $event)"
     @end="$emit('sort', items, $event)"
   >
-    <slot>
-      <k-item
-        v-for="(item, itemIndex) in items"
-        :key="item.id || itemIndex"
-        v-bind="item"
-        :class="{ 'k-draggable-item': sortable && item.sortable }"
-        :image="imageOptions(item)"
-        :layout="layout"
-        :link="link ? item.link : false"
-        :sortable="sortable && item.sortable"
-        :width="item.column"
-        @click="$emit('item', item, itemIndex)"
-        @drag="onDragStart($event, item.dragText)"
-        @mouseover.native="$emit('hover', $event, item, itemIndex)"
-        @option="$emit('option', $event, item, itemIndex)"
-      >
-        <template #options>
-          <slot name="options" :item="item" :index="itemIndex" />
-        </template>
-      </k-item>
-    </slot>
+    <k-item
+      v-for="(item, itemIndex) in items"
+      :key="item.id || itemIndex"
+      v-bind="item"
+      :class="{ 'k-draggable-item': sortable && item.sortable }"
+      :image="imageOptions(item)"
+      :layout="layout"
+      :link="link ? item.link : false"
+      :sortable="sortable && item.sortable"
+      :width="item.column"
+      @click="$emit('item', item, itemIndex)"
+      @drag="onDragStart($event, item.dragText)"
+      @mouseover.native="$emit('hover', $event, item, itemIndex)"
+      @option="$emit('option', $event, item, itemIndex)"
+    >
+      <template #options>
+        <slot name="options" :v-bind="{ item, itemIndex }" />
+      </template>
+    </k-item>
   </k-draggable>
 </template>
 

@@ -16,53 +16,21 @@
       />
     </header>
 
-    <template v-if="error">
-      <k-box theme="negative">
-        <k-text size="small">
-          <strong>
-            {{ $t("error.section.notLoaded", { name: name }) }}:
-          </strong>
-          {{ error }}
-        </k-text>
-      </k-box>
-    </template>
+    <k-box v-if="error" theme="negative">
+      <k-text size="small">
+        <strong> {{ $t("error.section.notLoaded", { name: name }) }}: </strong>
+        {{ error }}
+      </k-text>
+    </k-box>
 
-    <template v-else>
-      <k-collection
-        v-if="data.length"
-        :columns="options.columns"
-        :layout="options.layout"
-        :help="help"
-        :items="data"
-        :pagination="pagination"
-        :sortable="!isProcessing && options.sortable"
-        :size="options.size"
-        :data-invalid="isInvalid"
-        @change="sort"
-        @paginate="paginate"
-      />
-
-      <template v-else>
-        <k-empty
-          :layout="options.layout"
-          :data-invalid="isInvalid"
-          icon="page"
-          v-on="add ? { click: create } : {}"
-        >
-          {{ options.empty || $t("pages.empty") }}
-        </k-empty>
-        <footer class="k-collection-footer">
-          <!-- eslint-disable vue/no-v-html -->
-          <k-text
-            v-if="help"
-            theme="help"
-            class="k-collection-help"
-            v-html="help"
-          />
-          <!-- eslint-enable vue/no-v-html -->
-        </footer>
-      </template>
-    </template>
+    <k-collection
+      v-else
+      v-bind="collection"
+      :data-invalid="isInvalid"
+      @empty="add ? create : null"
+      @change="sort"
+      @paginate="paginate"
+    />
   </section>
 </template>
 
@@ -74,6 +42,12 @@ export default {
   computed: {
     add() {
       return this.options.add && this.$permissions.pages.create;
+    },
+    empty() {
+      return {
+        icon: "page",
+        text: this.options.empty || this.$t("pages.empty")
+      };
     }
   },
   created() {
