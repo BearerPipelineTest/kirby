@@ -64,11 +64,11 @@ export default {
       switch (this.column.type) {
         case "tags":
         case "multiselect":
-          if (Array.isArray(value) === false) {
-            value = value.split(",");
+          if (Array.isArray(value) === true) {
+            value = value.map((item) => item.text || item);
           }
 
-          return value.map((item) => item.text).join(", ");
+          return value.join(", ");
         case "checkboxes": {
           return value
             .map((item) => {

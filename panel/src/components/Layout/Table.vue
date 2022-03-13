@@ -11,7 +11,6 @@
 
         <template v-for="(column, columnIndex) in columns">
           <th
-            v-if="isColumnEmpty(columnIndex) === false"
             :key="columnIndex + '-header'"
             :style="'width:' + width(column.width)"
             class="k-table-column"
@@ -80,7 +79,6 @@
         <!-- Cell -->
         <template v-for="(column, columnIndex) in columns">
           <k-table-cell
-            v-if="isColumnEmpty(columnIndex) === false"
             :key="rowIndex + '-' + columnIndex"
             :column="column"
             :field="fields[columnIndex]"
