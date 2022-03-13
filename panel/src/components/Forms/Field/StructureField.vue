@@ -22,7 +22,7 @@
       :total="items.length"
       @close="onFormClose"
       @discard="onFormDiscard"
-      @paginate="open($event.offset)"
+      @paginate="onFormPaginate($event.offset)"
       @submit="onFormSubmit"
     />
 
@@ -334,6 +334,10 @@ export default {
         this.$refs.form?.focus(field);
       });
     },
+    onFormPaginate(index) {
+      this.save();
+      this.open(index);
+    },
     /**
      * Handles the structure form submission
      */
@@ -454,3 +458,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.k-structure-field:not([data-disabled="true"]) .k-table-column {
+  cursor: pointer;
+}
+</style>

@@ -1,5 +1,9 @@
 <template>
-  <table class="k-table" :data-disabled="disabled">
+  <table
+    class="k-table"
+    :data-disabled="disabled"
+    :data-indexed="hasIndexColumn"
+  >
     <!-- Header row -->
     <thead>
       <tr>
@@ -13,7 +17,6 @@
             class="k-table-column"
             @click="
               onHeader({
-                label: column.label || $helper.string.ucfirst(columnIndex),
                 column,
                 columnIndex
               })
@@ -24,10 +27,10 @@
               v-bind="{
                 column,
                 columnIndex,
-                label: column.label || $helper.string.ucfirst(columnIndex)
+                label: label(column, columnIndex)
               }"
             >
-              {{ column.label || $helper.string.ucfirst(columnIndex) }}
+              {{ label(column, columnIndex) }}
             </slot>
           </th>
         </template>
@@ -45,7 +48,7 @@
     >
       <!-- Empty -->
       <tr v-if="rows.length === 0">
-        <td :colspan="Object.keys(columns).length" class="k-table-empty">
+        <td :colspan="columnsCount" class="k-table-empty">
           {{ empty }}
         </td>
       </tr>
@@ -65,9 +68,7 @@
               rowIndex
             }"
           >
-            <div class="k-table-index">
-              {{ index + rowIndex }}
-            </div>
+            <div class="k-table-index" v-text="index + rowIndex" />
           </slot>
 
           <k-sort-handle
@@ -175,6 +176,9 @@ export default {
     };
   },
   computed: {
+    columnsCount() {
+      return Object.keys(this.columns).length;
+    },
     dragOptions() {
       return {
         disabled: !this.sortable,
@@ -205,6 +209,9 @@ export default {
         ).length === 0
       );
     },
+    label(column, columnIndex) {
+      return column.label || this.$helper.string.ucfirst(columnIndex);
+    },
     onCell(params) {
       this.$emit("cell", params);
     },
@@ -218,7 +225,8 @@ export default {
     onOption(option, row, rowIndex) {
       this.$emit("option", option, row, rowIndex);
     },
-    onSort() {
+    onSort(e) {
+      console.log(e);
       this.$emit("input", this.values);
       this.$emit("sort", this.values);
     },
@@ -360,7 +368,7 @@ export default {
   width: var(--table-row-height);
   text-align: center;
 }
-.k-table .k-table-index {
+.k-table-index {
   font-size: var(--text-xs);
   color: var(--color-gray-500);
   line-height: 1.1em;
@@ -401,10 +409,10 @@ export default {
   }
 
   .k-table th:first-child,
-  .k-table th:nth-child(2),
+  .k-table[data-indexed="true"] th:nth-child(2),
   .k-table th:last-child,
   .k-table td:first-child,
-  .k-table td:nth-child(2),
+  .k-table[data-indexed="true"] td:nth-child(2),
   .k-table td:last-child {
     display: table-cell;
   }

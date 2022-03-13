@@ -29,7 +29,6 @@
           :limit="1"
           :page="index + 1"
           :details="true"
-          :validate="onSubmit"
           @paginate="$emit('paginate', $event)"
         />
         <k-button

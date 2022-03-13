@@ -12,6 +12,7 @@
     :rows="items"
     :sortable="sortable"
     class="k-items"
+    @input="$emit('change', $event)"
     @option="$emit('option', ...$event)"
   >
     <template #index="{ row }">
@@ -24,11 +25,13 @@
       />
     </template>
     <template #options="{ row, rowIndex, options }">
-      <k-status-icon v-if="row.flag" v-bind="row.flag" />
-      <k-options-dropdown
-        :options="row.options || options"
-        @option="onOption($event, row, rowIndex)"
-      />
+      <div>
+        <k-status-icon v-if="row.flag" v-bind="row.flag" />
+        <k-options-dropdown
+          :options="row.options || options"
+          @option="onOption($event, row, rowIndex)"
+        />
+      </div>
     </template>
   </k-table>
 
@@ -58,7 +61,6 @@
         :width="item.column"
         @click="$emit('item', item, itemIndex)"
         @drag="onDragStart($event, item.dragText)"
-        @flag="$emit('flag', item, itemIndex)"
         @mouseover.native="$emit('hover', $event, item, itemIndex)"
         @option="$emit('option', $event, item, itemIndex)"
       >
@@ -216,8 +218,10 @@ export default {
  */
 .k-table.k-items th.k-table-options-column,
 .k-table.k-items td.k-table-options-column {
-  display: flex;
   width: calc(2 * var(--table-row-height));
+}
+.k-table.k-items td.k-table-options-column > div {
+  display: flex;
 }
 .k-table.k-items .k-status-icon {
   height: var(--table-row-height);

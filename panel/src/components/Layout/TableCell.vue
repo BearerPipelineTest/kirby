@@ -1,5 +1,5 @@
 <template>
-  <td :data-align="column.align" :title="tooltip">
+  <td :data-align="column.align">
     <template v-if="$helper.object.isEmpty(value) === false">
       <!-- Table cell type component -->
       <component
@@ -98,9 +98,6 @@ export default {
       }
 
       return value?.toString();
-    },
-    tooltip() {
-      return `${this.column.label || ""}: ${this.text}`;
     }
   }
 };
