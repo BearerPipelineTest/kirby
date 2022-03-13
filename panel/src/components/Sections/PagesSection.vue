@@ -134,6 +134,8 @@ export default {
     async sort(event) {
       let type = null;
 
+      console.log(event);
+
       if (event.added) {
         type = "added";
       }
