@@ -31,7 +31,7 @@
     "claviska/simpleimage": "3.6.5",
     "filp/whoops": "2.14.5",
     "getkirby/composer-installer": "^1.2.1",
-    "laminas/laminas-escaper": "2.9.0",
+    "laminas/laminas-escaper": "2.10.0",
     "michelf/php-smartypants": "1.8.1",
     "phpmailer/phpmailer": "6.5.4",
     "psr/log": "1.1.4",
