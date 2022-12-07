@@ -18,7 +18,7 @@
   "dependencies": {
     "@linusborg/vue-simple-portal": "^0.1.5",
     "autosize": "^5.0.1",
-    "dayjs": "^1.10.7",
+    "dayjs": "^1.11.7",
     "mitt": "^3.0.0",
     "prosemirror-commands": "^1.2.1",
     "prosemirror-history": "^1.2.0",
